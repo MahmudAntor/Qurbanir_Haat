@@ -1,0 +1,9 @@
+node_modules
+dist
+.output
+.vinxi
+.run
+logs
+pnpm-lock.yaml
+package-lock.json
+routeTree.gen.ts
