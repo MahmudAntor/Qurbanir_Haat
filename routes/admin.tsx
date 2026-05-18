@@ -238,6 +238,7 @@ type ProductSaveInput = {
 };
 
 const cattleStatuses = ["Available", "Reserved", "Sold"] as const;
+const MEDIA_BUCKET_NAME = "cattle-media";
 
 function ProductManager() {
   const [list, setList] = useState<Cattle[]>([]);
@@ -795,15 +796,27 @@ function parseWholeNumber(value: string) {
 
 async function uploadMedia(cattleId: string, file: File, type: "image" | "video") {
   const path = `cattle/${cattleId}/${type}-${Date.now()}-${safeFileName(file.name)}`;
-  const { error } = await supabase.storage.from("cattle-media").upload(path, file, {
+  const { error } = await supabase.storage.from(MEDIA_BUCKET_NAME).upload(path, file, {
     contentType: file.type || undefined,
     upsert: true,
   });
 
-  if (error) throw error;
+  if (error) {
+    if (isMissingStorageBucketError(error)) {
+      throw new Error(
+        `Supabase Storage bucket "${MEDIA_BUCKET_NAME}" is missing. Apply the storage migration or create a public "${MEDIA_BUCKET_NAME}" bucket before uploading media.`,
+      );
+    }
+    throw error;
+  }
 
-  const { data } = supabase.storage.from("cattle-media").getPublicUrl(path);
+  const { data } = supabase.storage.from(MEDIA_BUCKET_NAME).getPublicUrl(path);
   return data.publicUrl;
+}
+
+function isMissingStorageBucketError(error: unknown) {
+  const message = getErrorMessage(error).toLowerCase();
+  return message.includes("bucket") && message.includes("not found");
 }
 
 function safeFileName(fileName: string) {

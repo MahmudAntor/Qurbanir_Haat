@@ -77,8 +77,9 @@ SUPABASE_PUBLISHABLE_KEY=
 ```
 
 The production server injects these two public values into the page at runtime, so you can configure
-them in the server environment or `.env` before running `scripts/start.*`. If you prefer Vite's
-build-time convention, `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` are also supported.
+them in the server environment or `.env` before running `scripts/start.*`. `VITE_SUPABASE_URL` and
+`VITE_SUPABASE_PUBLISHABLE_KEY` are supported as server/runtime aliases, but they are not baked into
+the browser bundle.
 
 Optional project metadata:
 
@@ -181,6 +182,11 @@ Apply the migrations in `supabase/migrations` to create:
 
 The first user who signs up through `/admin` becomes the initial admin. After that, admin access is
 controlled through rows in `public.user_roles`.
+
+If admin text edits save but photo/video uploads fail with `Bucket not found`, the app is connected
+to a Supabase project where the Storage bucket was not created. Run the latest migration in
+`supabase/migrations` or create a public Storage bucket named `cattle-media` with the matching
+storage policies.
 
 ## Admin Workflow
 

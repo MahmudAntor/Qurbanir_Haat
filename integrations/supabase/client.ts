@@ -15,7 +15,13 @@ function getRuntimePublicEnv(): RuntimePublicEnv {
   return window.__QURBANIR_HAAT_ENV__ ?? {};
 }
 
-function getProcessEnv(name: "SUPABASE_URL" | "SUPABASE_PUBLISHABLE_KEY") {
+type PublicEnvName =
+  | "SUPABASE_URL"
+  | "SUPABASE_PUBLISHABLE_KEY"
+  | "VITE_SUPABASE_URL"
+  | "VITE_SUPABASE_PUBLISHABLE_KEY";
+
+function getProcessEnv(name: PublicEnvName) {
   if (typeof process === "undefined") {
     return undefined;
   }
@@ -26,25 +32,20 @@ function getProcessEnv(name: "SUPABASE_URL" | "SUPABASE_PUBLISHABLE_KEY") {
 function createSupabaseClient() {
   const runtimePublicEnv = getRuntimePublicEnv();
   const isBrowser = typeof window !== "undefined";
-  const SUPABASE_URL =
-    import.meta.env.VITE_SUPABASE_URL ||
-    runtimePublicEnv.SUPABASE_URL ||
-    getProcessEnv("SUPABASE_URL");
-  const SUPABASE_PUBLISHABLE_KEY =
-    import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ||
-    runtimePublicEnv.SUPABASE_PUBLISHABLE_KEY ||
-    getProcessEnv("SUPABASE_PUBLISHABLE_KEY");
+  const SUPABASE_URL = isBrowser
+    ? runtimePublicEnv.SUPABASE_URL
+    : getProcessEnv("SUPABASE_URL") || getProcessEnv("VITE_SUPABASE_URL");
+  const SUPABASE_PUBLISHABLE_KEY = isBrowser
+    ? runtimePublicEnv.SUPABASE_PUBLISHABLE_KEY
+    : getProcessEnv("SUPABASE_PUBLISHABLE_KEY") ||
+      getProcessEnv("VITE_SUPABASE_PUBLISHABLE_KEY");
 
   if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
     const missing = [
-      ...(!SUPABASE_URL
-        ? [isBrowser ? "VITE_SUPABASE_URL or runtime SUPABASE_URL" : "SUPABASE_URL"]
-        : []),
+      ...(!SUPABASE_URL ? [isBrowser ? "runtime SUPABASE_URL" : "SUPABASE_URL"] : []),
       ...(!SUPABASE_PUBLISHABLE_KEY
         ? [
-            isBrowser
-              ? "VITE_SUPABASE_PUBLISHABLE_KEY or runtime SUPABASE_PUBLISHABLE_KEY"
-              : "SUPABASE_PUBLISHABLE_KEY",
+            isBrowser ? "runtime SUPABASE_PUBLISHABLE_KEY" : "SUPABASE_PUBLISHABLE_KEY",
           ]
         : []),
     ];
