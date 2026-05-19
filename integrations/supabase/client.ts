@@ -37,16 +37,13 @@ function createSupabaseClient() {
     : getProcessEnv("SUPABASE_URL") || getProcessEnv("VITE_SUPABASE_URL");
   const SUPABASE_PUBLISHABLE_KEY = isBrowser
     ? runtimePublicEnv.SUPABASE_PUBLISHABLE_KEY
-    : getProcessEnv("SUPABASE_PUBLISHABLE_KEY") ||
-      getProcessEnv("VITE_SUPABASE_PUBLISHABLE_KEY");
+    : getProcessEnv("SUPABASE_PUBLISHABLE_KEY") || getProcessEnv("VITE_SUPABASE_PUBLISHABLE_KEY");
 
   if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
     const missing = [
       ...(!SUPABASE_URL ? [isBrowser ? "runtime SUPABASE_URL" : "SUPABASE_URL"] : []),
       ...(!SUPABASE_PUBLISHABLE_KEY
-        ? [
-            isBrowser ? "runtime SUPABASE_PUBLISHABLE_KEY" : "SUPABASE_PUBLISHABLE_KEY",
-          ]
+        ? [isBrowser ? "runtime SUPABASE_PUBLISHABLE_KEY" : "SUPABASE_PUBLISHABLE_KEY"]
         : []),
     ];
     const message = `Missing Supabase environment variable(s): ${missing.join(", ")}. Configure them in the app environment and restart the server.`;

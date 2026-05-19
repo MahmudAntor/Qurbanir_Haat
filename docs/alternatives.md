@@ -5,9 +5,11 @@ This file keeps the hosted-platform options for future reference.
 
 ## Netlify Free
 
-Netlify can be useful for a quick public test run. It supports the Nitro Netlify preset, custom
-domains, SSL, functions, and a free plan with a hard monthly credit limit. The app has been checked
-with the Netlify preset locally.
+Netlify can be useful for a quick public test run. It supports custom domains, SSL, functions, and a
+free plan with a hard monthly credit limit. The app has been checked with the Nitro Netlify preset
+locally.
+
+For the full current runbook, see `docs/NETLIFY_DEPLOYMENT.md`.
 
 ### Netlify Project Settings
 
@@ -35,6 +37,9 @@ VITE_SUPABASE_PROJECT_ID=your-project-id
 
 Do not add `SUPABASE_SERVICE_ROLE_KEY` unless a trusted server-only route needs it. Never use a
 service role key in a `VITE_*` variable.
+
+Do not drag and drop the raw project folder for production. Manual deploys do not run the build
+command, and this app needs Netlify to build the server function output.
 
 ### Netlify Free Credit Planning
 

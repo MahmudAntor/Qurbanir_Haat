@@ -215,9 +215,9 @@ refresh as admin changes land.
 
 ## Production Deployment
 
-For the own-server production runbook, see [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md). For Netlify,
-GitHub Pages, Render, Cloudflare Pages, and other hosted options, see
-[`docs/alternatives.md`](docs/alternatives.md).
+For the own-server production runbook, see [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md). For the
+Netlify runbook, see [`docs/NETLIFY_DEPLOYMENT.md`](docs/NETLIFY_DEPLOYMENT.md). For GitHub Pages,
+Render, Cloudflare Pages, and other hosted options, see [`docs/alternatives.md`](docs/alternatives.md).
 
 This project is no longer tied to Lovable or Cloudflare Workers. Production builds use the official
 TanStack Start Vite plugin with Nitro output for a normal Node.js server.
