@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { DEFAULT_META_PIXEL_ID, injectMetaPixel } from "@/lib/meta-pixel";
 
-type Settings = { whatsapp: string; metaPixelId: string | null };
+type Settings = { whatsapp: string; metaPixelId: string };
+
+const DEFAULT_SETTINGS: Settings = {
+  whatsapp: "8801700000000",
+  metaPixelId: DEFAULT_META_PIXEL_ID,
+};
 
 let cache: Settings | null = null;
 const listeners = new Set<(s: Settings) => void>();
@@ -9,8 +15,8 @@ const listeners = new Set<(s: Settings) => void>();
 async function load() {
   const { data } = await supabase.from("site_settings").select("*").eq("id", 1).maybeSingle();
   const next: Settings = {
-    whatsapp: data?.whatsapp_number ?? "8801700000000",
-    metaPixelId: data?.meta_pixel_id ?? null,
+    whatsapp: data?.whatsapp_number ?? DEFAULT_SETTINGS.whatsapp,
+    metaPixelId: data?.meta_pixel_id?.trim() || DEFAULT_META_PIXEL_ID,
   };
   cache = next;
   listeners.forEach((l) => l(next));
@@ -18,7 +24,7 @@ async function load() {
 }
 
 export function useSiteSettings(): Settings {
-  const [s, setS] = useState<Settings>(cache ?? { whatsapp: "8801700000000", metaPixelId: null });
+  const [s, setS] = useState<Settings>(cache ?? DEFAULT_SETTINGS);
   useEffect(() => {
     listeners.add(setS);
     if (!cache) load();
@@ -27,34 +33,6 @@ export function useSiteSettings(): Settings {
     };
   }, []);
   return s;
-}
-
-export function injectMetaPixel(pixelId: string) {
-  if (typeof window === "undefined") return;
-  if (window.fbq) return;
-  /* eslint-disable */
-  // @ts-ignore
-  (function (f: any, b, e, v, n?: any, t?: any, s?: any) {
-    if (f.fbq) return;
-    n = f.fbq = function () {
-      n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
-    };
-    if (!f._fbq) f._fbq = n;
-    n.push = n;
-    n.loaded = !0;
-    n.version = "2.0";
-    n.queue = [];
-    t = b.createElement(e);
-    t.async = !0;
-    t.src = v;
-    s = b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t, s);
-  })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
-  // @ts-ignore
-  window.fbq("init", pixelId);
-  // @ts-ignore
-  window.fbq("track", "PageView");
-  /* eslint-enable */
 }
 
 export function MetaPixelLoader() {

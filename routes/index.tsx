@@ -6,7 +6,6 @@ import { HowItWorks } from "@/components/site/HowItWorks";
 import { YieldCalculator } from "@/components/site/YieldCalculator";
 import { Inquiry } from "@/components/site/Inquiry";
 import { FloatingWhatsApp, Footer } from "@/components/site/Footer";
-import { MetaPixelLoader } from "@/lib/use-site-settings";
 
 export const Route = createFileRoute("/")({
   head: () => ({

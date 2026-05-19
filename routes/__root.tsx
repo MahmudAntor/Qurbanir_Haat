@@ -10,6 +10,7 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import { getMetaPixelBaseCode, getMetaPixelNoScriptUrl } from "@/lib/meta-pixel";
 import { MetaPixelLoader } from "@/lib/use-site-settings";
 
 type PublicRuntimeEnv = {
@@ -196,8 +197,18 @@ function RootShell({ children }: { children: React.ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        <script dangerouslySetInnerHTML={{ __html: getMetaPixelBaseCode() }} />
       </head>
       <body>
+        <noscript>
+          <img
+            height="1"
+            width="1"
+            style={{ display: "none" }}
+            src={getMetaPixelNoScriptUrl()}
+            alt=""
+          />
+        </noscript>
         <script
           suppressHydrationWarning
           dangerouslySetInnerHTML={{ __html: getPublicRuntimeEnvScript() }}

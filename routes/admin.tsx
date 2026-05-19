@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import type { Tables, TablesUpdate } from "@/integrations/supabase/types";
 import { Toaster } from "@/components/ui/sonner";
 import { formatBDT, type Cattle, type CattleStatus } from "@/lib/cattle-data";
+import { DEFAULT_META_PIXEL_ID } from "@/lib/meta-pixel";
 import { cn } from "@/lib/utils";
 import {
   Image as ImageIcon,
@@ -1124,7 +1125,7 @@ function SettingsView() {
       .then(({ data }) => {
         if (data) {
           setWhatsapp(data.whatsapp_number ?? "");
-          setPixel(data.meta_pixel_id ?? "");
+          setPixel(data.meta_pixel_id ?? DEFAULT_META_PIXEL_ID);
         }
       });
   }, []);
@@ -1132,7 +1133,7 @@ function SettingsView() {
   const save = async () => {
     await supabase
       .from("site_settings")
-      .update({ whatsapp_number: whatsapp, meta_pixel_id: pixel || null })
+      .update({ whatsapp_number: whatsapp, meta_pixel_id: pixel.trim() || DEFAULT_META_PIXEL_ID })
       .eq("id", 1);
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
@@ -1160,7 +1161,7 @@ function SettingsView() {
           <input
             value={pixel}
             onChange={(e) => setPixel(e.target.value)}
-            placeholder="1234567890"
+            placeholder={DEFAULT_META_PIXEL_ID}
             className="mt-2 w-full rounded-xl border border-input bg-background px-4 py-3 outline-none ring-ring focus:ring-2"
           />
           <span className="mt-1 block text-xs text-muted-foreground">
