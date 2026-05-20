@@ -239,6 +239,9 @@ type ProductSaveInput = {
 
 const cattleStatuses = ["Available", "Reserved", "Sold"] as const;
 const MEDIA_BUCKET_NAME = "cattle-media";
+const MAX_IMAGE_UPLOAD_EDGE = 1600;
+const IMAGE_UPLOAD_TYPE = "image/jpeg";
+const IMAGE_UPLOAD_QUALITY = 0.82;
 
 function ProductManager() {
   const [list, setList] = useState<Cattle[]>([]);
@@ -787,9 +790,10 @@ function parseWholeNumber(value: string) {
 }
 
 async function uploadMedia(cattleId: string, file: File, type: "image" | "video") {
-  const path = `cattle/${cattleId}/${type}-${Date.now()}-${safeFileName(file.name)}`;
-  const { error } = await supabase.storage.from(MEDIA_BUCKET_NAME).upload(path, file, {
-    contentType: file.type || undefined,
+  const uploadFile = type === "image" ? await optimizeImageUpload(file) : file;
+  const path = `cattle/${cattleId}/${type}-${Date.now()}-${safeFileName(uploadFile.name)}`;
+  const { error } = await supabase.storage.from(MEDIA_BUCKET_NAME).upload(path, uploadFile, {
+    contentType: uploadFile.type || undefined,
     upsert: true,
   });
 
@@ -804,6 +808,59 @@ async function uploadMedia(cattleId: string, file: File, type: "image" | "video"
 
   const { data } = supabase.storage.from(MEDIA_BUCKET_NAME).getPublicUrl(path);
   return data.publicUrl;
+}
+
+async function optimizeImageUpload(file: File) {
+  if (
+    !file.type.startsWith("image/") ||
+    file.type === "image/gif" ||
+    file.type === "image/svg+xml"
+  ) {
+    return file;
+  }
+
+  try {
+    const bitmap = await createImageBitmap(file);
+    const longestEdge = Math.max(bitmap.width, bitmap.height);
+    const scale = Math.min(1, MAX_IMAGE_UPLOAD_EDGE / longestEdge);
+    const width = Math.round(bitmap.width * scale);
+    const height = Math.round(bitmap.height * scale);
+    const shouldCompress = scale < 1 || file.type !== IMAGE_UPLOAD_TYPE || file.size > 350 * 1024;
+
+    if (!shouldCompress) {
+      bitmap.close();
+      return file;
+    }
+
+    const canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+    const context = canvas.getContext("2d");
+    if (!context) {
+      bitmap.close();
+      return file;
+    }
+
+    context.drawImage(bitmap, 0, 0, width, height);
+    bitmap.close();
+
+    const blob = await new Promise<Blob | null>((resolve) =>
+      canvas.toBlob(resolve, IMAGE_UPLOAD_TYPE, IMAGE_UPLOAD_QUALITY),
+    );
+
+    if (!blob || blob.size >= file.size) return file;
+
+    return new File([blob], replaceFileExtension(file.name, "jpg"), {
+      type: IMAGE_UPLOAD_TYPE,
+      lastModified: Date.now(),
+    });
+  } catch {
+    return file;
+  }
+}
+
+function replaceFileExtension(fileName: string, extension: string) {
+  return fileName.replace(/\.[^.]+$/, "") + `.${extension}`;
 }
 
 function isMissingStorageBucketError(error: unknown) {

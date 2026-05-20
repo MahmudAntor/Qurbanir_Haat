@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { formatBDT, type Cattle } from "@/lib/cattle-data";
+import { optimizedImageUrl } from "@/lib/image-urls";
 import { Play, MessageCircle, Scale, Heart, Wheat, Loader2 } from "lucide-react";
 import { useSiteSettings } from "@/lib/use-site-settings";
 
@@ -174,9 +175,15 @@ export function Catalog() {
                 <div className="relative aspect-[4/3] overflow-hidden bg-muted">
                   {c.image_url && (
                     <img
-                      src={c.image_url}
+                      src={optimizedImageUrl(c.image_url, {
+                        width: 640,
+                        height: 480,
+                        fit: "cover",
+                        quality: 72,
+                      })}
                       alt={c.name}
                       loading="lazy"
+                      decoding="async"
                       width={1024}
                       height={768}
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -259,7 +266,12 @@ export function Catalog() {
             <div className="aspect-video bg-foreground">
               <video
                 src={video.video_url ?? undefined}
-                poster={video.image_url ?? undefined}
+                poster={optimizedImageUrl(video.image_url, {
+                  width: 960,
+                  height: 540,
+                  fit: "cover",
+                  quality: 72,
+                })}
                 controls
                 autoPlay
                 className="h-full w-full object-cover"

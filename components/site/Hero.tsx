@@ -1,15 +1,25 @@
 import heroImg from "@/assets/hero-bull.jpg";
+import { optimizedImageSrcSet, optimizedImageUrl } from "@/lib/image-urls";
 import { ArrowRight, PlayCircle } from "lucide-react";
 
 export function Hero() {
+  const heroSrc = optimizedImageUrl(heroImg, { width: 1600, quality: 72 });
+  const heroSrcSet = optimizedImageSrcSet(heroImg, [640, 960, 1280, 1600, 1920], {
+    quality: 72,
+  });
+
   return (
     <section className="relative isolate min-h-[100svh] overflow-hidden">
       <img
-        src={heroImg}
+        src={heroSrc}
+        srcSet={heroSrcSet}
+        sizes="100vw"
         alt="Premium Sahiwal bull at sunrise"
         className="absolute inset-0 h-full w-full object-cover"
         width={1920}
         height={1080}
+        fetchPriority="high"
+        decoding="async"
       />
       <div className="absolute inset-0 bg-gradient-hero" />
       <div className="absolute inset-0 bg-[radial-gradient(80%_60%_at_50%_100%,oklch(0.18_0.05_155/0.6),transparent)]" />

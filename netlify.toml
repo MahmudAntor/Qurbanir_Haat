@@ -5,3 +5,8 @@
 [build.environment]
   NODE_VERSION = "22"
   NITRO_PRESET = "netlify"
+
+[images]
+  remote_images = [
+    'https:\/\/uyluwzldhcatldeegqgy\.supabase\.co\/storage\/v1\/object\/public\/cattle-media\/.*'
+  ]
