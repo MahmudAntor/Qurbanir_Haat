@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { formatBDT, type Cattle } from "@/lib/cattle-data";
-import { Play, MessageCircle, Ruler, Scale, Heart, Wheat, Loader2 } from "lucide-react";
+import { Play, MessageCircle, Scale, Heart, Wheat, Loader2 } from "lucide-react";
 import { useSiteSettings } from "@/lib/use-site-settings";
 
 function StatusBadge({ status }: { status: Cattle["status"] }) {
@@ -209,12 +209,9 @@ export function Catalog() {
                     <p className="font-display text-lg text-primary">{formatBDT(c.price_bdt)}</p>
                   </div>
 
-                  <dl className="mt-4 grid grid-cols-2 gap-x-3 gap-y-2 text-xs">
+                  <dl className="mt-4 grid grid-cols-1 gap-y-2 text-xs sm:grid-cols-3 sm:gap-x-3">
                     <div className="flex items-center gap-1.5 text-muted-foreground">
                       <Scale className="h-3.5 w-3.5" /> {c.weight_kg} kg
-                    </div>
-                    <div className="flex items-center gap-1.5 text-muted-foreground">
-                      <Ruler className="h-3.5 w-3.5" /> {c.height_inches}″
                     </div>
                     <div className="flex items-center gap-1.5 text-muted-foreground">
                       <Wheat className="h-3.5 w-3.5" /> {c.age_teeth} teeth

@@ -21,12 +21,11 @@ export function Hero() {
             Eid-ul-Adha 2026 · Bookings Open
           </span>
           <h1 className="mt-6 font-display text-5xl leading-[1.02] text-white text-balance sm:text-6xl lg:text-7xl">
-            Hand-picked Qurbani cattle,
-            <span className="italic text-gold"> raised with care.</span>
+            Qurbanir Haat
           </h1>
           <p className="mt-5 max-w-xl text-base text-white/80 sm:text-lg">
-            A curated collection of 60+ healthy bulls. Transparent stats, vet-certified, and
-            personally delivered to your doorstep across Bangladesh.
+            Hand-picked Qurbani cattle with transparent stats, vet-certified health notes, and
+            delivery support across Bangladesh.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <a

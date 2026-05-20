@@ -1,6 +1,6 @@
 # Netlify Deployment Guide
 
-This guide is for deploying Qurbanir Haat / Bhumi Bovine to Netlify from the Git repository.
+This guide is for deploying Qurbanir Haat to Netlify from the Git repository.
 
 The project is a TanStack Start app with server-rendered output. Use Netlify continuous deployment
 from Git so Netlify can install dependencies, run the build, publish static assets, and deploy the
@@ -161,11 +161,10 @@ After deployment:
 2. Confirm the home page renders without the fallback error page.
 3. Confirm the catalog loads cattle from Supabase.
 4. Test filters and the yield calculator.
-5. Submit a test inquiry.
-6. Open `/admin`, sign in, and update one harmless setting.
-7. Upload a test image to confirm Supabase Storage works.
-8. Add the custom domain and test both apex and `www`.
-9. Confirm HTTPS is active.
+5. Open `/admin`, sign in, and update one harmless setting.
+6. Upload a test image to confirm Supabase Storage works.
+7. Add the custom domain and test both apex and `www`.
+8. Confirm HTTPS is active.
 
 ## Current Netlify TanStack Start Docs Note
 

@@ -1,5 +1,6 @@
 import { MessageCircle } from "lucide-react";
 import { useSiteSettings } from "@/lib/use-site-settings";
+import logoSrc from "@/logo.jpg";
 
 export function FloatingWhatsApp() {
   const { whatsapp } = useSiteSettings();
@@ -28,12 +29,14 @@ export function Footer() {
       <div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 lg:grid-cols-4 lg:px-8">
         <div className="lg:col-span-2">
           <div className="flex items-center gap-2">
-            <span className="grid h-9 w-9 place-items-center rounded-full bg-gold text-gold-foreground font-display text-lg">
-              B
+            <span className="grid h-11 w-11 place-items-center overflow-hidden rounded-full bg-background ring-1 ring-primary-foreground/15">
+              <img
+                src={logoSrc}
+                alt="Qurbanir Haat logo"
+                className="h-full w-full object-contain"
+              />
             </span>
-            <span className="font-display text-lg">
-              Bhumi <span className="text-gold">Bovine</span>
-            </span>
+            <span className="font-display text-lg">Qurbanir Haat</span>
           </div>
           <p className="mt-4 max-w-md text-sm text-primary-foreground/75">
             Premium Qurbani cattle, raised with care on our farm in Pabna. Hand-picked,
@@ -44,22 +47,22 @@ export function Footer() {
           <p className="text-xs uppercase tracking-wider text-gold">Explore</p>
           <ul className="mt-4 space-y-2 text-sm text-primary-foreground/80">
             <li>
-              <a href="#catalog" className="hover:text-gold">
+              <a href="/#catalog" className="hover:text-gold">
                 Catalog
               </a>
             </li>
             <li>
-              <a href="#how" className="hover:text-gold">
+              <a href="/#how" className="hover:text-gold">
                 How it Works
               </a>
             </li>
             <li>
-              <a href="#packages" className="hover:text-gold">
-                Packages
+              <a href="/#comparison" className="hover:text-gold">
+                Compare
               </a>
             </li>
             <li>
-              <a href="#calculator" className="hover:text-gold">
+              <a href="/#calculator" className="hover:text-gold">
                 Yield Calculator
               </a>
             </li>
@@ -69,13 +72,13 @@ export function Footer() {
           <p className="text-xs uppercase tracking-wider text-gold">Contact</p>
           <ul className="mt-4 space-y-2 text-sm text-primary-foreground/80">
             <li>WhatsApp: +880 1700 000 000</li>
-            <li>hello@bhumibovine.com</li>
+            <li>hello@qurbanirhaat.online</li>
             <li>Pabna · Dhaka · Bangladesh</li>
           </ul>
         </div>
       </div>
       <div className="border-t border-primary-foreground/10 px-5 py-5 text-center text-xs text-primary-foreground/60 lg:px-8">
-        © {new Date().getFullYear()} Bhumi Bovine. All rights reserved.
+        © {new Date().getFullYear()} Qurbanir Haat. All rights reserved.
       </div>
     </footer>
   );

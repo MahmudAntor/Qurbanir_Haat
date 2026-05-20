@@ -153,16 +153,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Bhumi Bovine — Premium Qurbani Cattle, Delivered" },
+      { title: "Qurbanir Haat - Premium Qurbani Cattle, Delivered" },
       {
         name: "description",
         content:
           "Hand-picked, health-certified Qurbani cattle from our farms — transparent pricing, free delivery across Bangladesh.",
       },
-      { name: "author", content: "Bhumi Bovine" },
+      { name: "author", content: "Qurbanir Haat" },
       {
         property: "og:title",
-        content: "Bhumi Bovine — Premium Qurbani Cattle",
+        content: "Qurbanir Haat - Premium Qurbani Cattle",
       },
       {
         property: "og:description",
@@ -170,7 +170,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@BhumiBovine" },
+      { name: "twitter:site", content: "@QurbanirHaat" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

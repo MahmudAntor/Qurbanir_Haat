@@ -2,10 +2,10 @@
 
 Qurbanir Haat is a self-hosted TanStack Start marketplace for premium Qurbani cattle. The public
 site presents a searchable cattle catalog, reservation calls to action, a meat-yield calculator,
-package comparison content, and an inquiry form. A protected admin area manages cattle inventory,
+payment and delivery guidance, and a traditional-haat comparison. A protected admin area manages cattle inventory,
 media uploads, inbound inquiries, WhatsApp contact settings, and Meta Pixel tracking.
 
-The app is branded in the UI as **Bhumi Bovine**.
+The app is branded in the UI as **Qurbanir Haat**.
 
 ## Features
 
@@ -14,7 +14,6 @@ The app is branded in the UI as **Bhumi Bovine**.
 - Breed, weight, and price filters.
 - Cattle cards with image, video, health, feed, price, and availability details.
 - WhatsApp reservation links with configurable phone number.
-- Inquiry form with client-side Zod validation and Supabase row-level security.
 - Yield calculator for estimated meat yield and per-share pricing.
 - Protected admin dashboard for cattle, inquiries, and site settings.
 - Supabase Storage bucket for cattle photos and videos.
@@ -205,10 +204,9 @@ The main route (`/`) renders:
 
 1. Header and hero section.
 2. Cattle catalog with live Supabase data and filters.
-3. Process, packages, and comparison sections.
+3. Process and comparison sections.
 4. Yield calculator.
-5. Inquiry form.
-6. Footer and floating WhatsApp action.
+5. Footer and floating WhatsApp action.
 
 The catalog subscribes to Supabase Realtime updates on the `cattle` table, so public inventory can
 refresh as admin changes land.

@@ -4,14 +4,13 @@ import { Hero } from "@/components/site/Hero";
 import { Catalog } from "@/components/site/Catalog";
 import { HowItWorks } from "@/components/site/HowItWorks";
 import { YieldCalculator } from "@/components/site/YieldCalculator";
-import { Inquiry } from "@/components/site/Inquiry";
 import { FloatingWhatsApp, Footer } from "@/components/site/Footer";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       {
-        title: "Bhumi Bovine — Premium Qurbani Cattle, Hand-picked & Delivered",
+        title: "Qurbanir Haat - Premium Qurbani Cattle, Hand-picked & Delivered",
       },
       {
         name: "description",
@@ -20,7 +19,7 @@ export const Route = createFileRoute("/")({
       },
       {
         property: "og:title",
-        content: "Bhumi Bovine — Premium Qurbani Cattle",
+        content: "Qurbanir Haat - Premium Qurbani Cattle",
       },
       {
         property: "og:description",
@@ -39,7 +38,6 @@ function Index() {
       <Catalog />
       <HowItWorks />
       <YieldCalculator />
-      <Inquiry />
       <Footer />
       <FloatingWhatsApp />
     </main>

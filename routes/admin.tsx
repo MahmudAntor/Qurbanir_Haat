@@ -22,7 +22,7 @@ import {
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
-    meta: [{ title: "Admin · Bhumi Bovine" }, { name: "robots", content: "noindex" }],
+    meta: [{ title: "Admin - Qurbanir Haat" }, { name: "robots", content: "noindex" }],
   }),
   component: AdminPage,
 });
@@ -95,7 +95,7 @@ function AuthForm() {
     <div className="grid min-h-screen place-items-center bg-cream px-4">
       <div className="w-full max-w-md rounded-2xl border border-border bg-card p-8 shadow-elegant">
         <Link to="/" className="font-display text-xl">
-          Bhumi <span className="text-gold">Bovine</span>
+          Qurbanir Haat
         </Link>
         <h1 className="mt-6 font-display text-3xl">
           Admin {mode === "signin" ? "Sign in" : "Sign up"}
@@ -172,7 +172,7 @@ function Dashboard() {
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
           <div className="flex items-center gap-6">
             <Link to="/" className="font-display text-lg">
-              Bhumi <span className="text-gold">Bovine</span> · Admin
+              Qurbanir Haat · Admin
             </Link>
             <nav className="hidden gap-1 md:flex">
               {tabs.map((t) => (
@@ -225,7 +225,6 @@ type CattleDraft = {
   color: string;
   weight_kg: string;
   age_teeth: string;
-  height_inches: string;
   price_bdt: string;
   status: CattleStatus;
   feed: string;
@@ -556,12 +555,6 @@ function ProductEditor({
             onChange={(value) => updateDraft("age_teeth", value)}
           />
           <DraftField
-            label="Height (in)"
-            type="number"
-            value={draft.height_inches}
-            onChange={(value) => updateDraft("height_inches", value)}
-          />
-          <DraftField
             label="Price (BDT)"
             type="number"
             value={draft.price_bdt}
@@ -755,7 +748,6 @@ function toDraft(cattle: Cattle): CattleDraft {
     color: cattle.color ?? "",
     weight_kg: String(cattle.weight_kg ?? 0),
     age_teeth: String(cattle.age_teeth ?? 0),
-    height_inches: String(cattle.height_inches ?? 0),
     price_bdt: String(cattle.price_bdt ?? 0),
     status: cattle.status,
     feed: cattle.feed ?? "",
@@ -782,7 +774,6 @@ function draftToUpdate(draft: CattleDraft): TablesUpdate<"cattle"> {
     color: draft.color.trim(),
     weight_kg: parseWholeNumber(draft.weight_kg),
     age_teeth: parseWholeNumber(draft.age_teeth),
-    height_inches: parseWholeNumber(draft.height_inches),
     price_bdt: parseWholeNumber(draft.price_bdt),
     status: draft.status,
     feed: draft.feed.trim(),
@@ -970,12 +961,6 @@ function CattleManager() {
                 type="number"
                 value={String(c.age_teeth)}
                 onSave={(v) => updateField(c.id, { age_teeth: +v })}
-              />
-              <Inp
-                label="Height (in)"
-                type="number"
-                value={String(c.height_inches)}
-                onSave={(v) => updateField(c.id, { height_inches: +v })}
               />
               <Inp
                 label="Price (BDT)"

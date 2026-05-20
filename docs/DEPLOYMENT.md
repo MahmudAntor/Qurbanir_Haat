@@ -279,9 +279,8 @@ After first deployment and after important updates:
 2. Confirm cattle filters update the count and cards.
 3. Open `/admin` and sign in.
 4. Update one harmless setting, then verify it appears on the public site.
-5. Submit a test inquiry.
-6. Click a WhatsApp reservation link and confirm the message includes the right cattle code.
-7. Check server logs for errors.
+5. Click a WhatsApp reservation link and confirm the message includes the right cattle code.
+6. Check server logs for errors.
 
 ## Useful Commands
 
