@@ -1,4 +1,4 @@
-# Qurbanir Haat
+# [Qurbanir Haat](https://qurbanirhaat.online/)
 
 Qurbanir Haat is a self-hosted TanStack Start marketplace for premium Qurbani cattle. The public
 site presents a searchable cattle catalog, reservation calls to action, a meat-yield calculator,
