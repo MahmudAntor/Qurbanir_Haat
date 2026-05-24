@@ -1154,7 +1154,9 @@ function InquiriesView() {
 }
 
 function SettingsView() {
-  const [whatsapp, setWhatsapp] = useState("");
+  const [whatsapp, setWhatsapp] = useState("8801715155505");
+  const [email, setEmail] = useState("info.qurbanirhaat@gmail.com");
+  const [location, setLocation] = useState("Dhaka, Bangladesh");
   const [pixel, setPixel] = useState("");
   const [saved, setSaved] = useState(false);
 
@@ -1167,16 +1169,27 @@ function SettingsView() {
       .then(({ data }) => {
         if (data) {
           setWhatsapp(data.whatsapp_number ?? "");
+          setEmail(data.contact_email ?? "info.qurbanirhaat@gmail.com");
+          setLocation(data.contact_location ?? "Dhaka, Bangladesh");
           setPixel(data.meta_pixel_id ?? DEFAULT_META_PIXEL_ID);
         }
       });
   }, []);
 
   const save = async () => {
-    await supabase
+    const { error } = await supabase
       .from("site_settings")
-      .update({ whatsapp_number: whatsapp, meta_pixel_id: pixel.trim() || DEFAULT_META_PIXEL_ID })
+      .update({
+        whatsapp_number: whatsapp,
+        contact_email: email.trim() || "info.qurbanirhaat@gmail.com",
+        contact_location: location.trim(),
+        meta_pixel_id: pixel.trim() || DEFAULT_META_PIXEL_ID,
+      })
       .eq("id", 1);
+    if (error) {
+      toast.error("Settings could not be saved", { description: error.message });
+      return;
+    }
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   };
@@ -1192,7 +1205,29 @@ function SettingsView() {
           <input
             value={whatsapp}
             onChange={(e) => setWhatsapp(e.target.value)}
-            placeholder="8801700000000"
+            placeholder="8801715155505"
+            className="mt-2 w-full rounded-xl border border-input bg-background px-4 py-3 outline-none ring-ring focus:ring-2"
+          />
+        </label>
+        <label className="block">
+          <span className="text-xs uppercase tracking-wider text-muted-foreground">
+            Contact email
+          </span>
+          <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="info.qurbanirhaat@gmail.com"
+            className="mt-2 w-full rounded-xl border border-input bg-background px-4 py-3 outline-none ring-ring focus:ring-2"
+          />
+        </label>
+        <label className="block">
+          <span className="text-xs uppercase tracking-wider text-muted-foreground">
+            Contact location
+          </span>
+          <input
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            placeholder="Dhaka, Bangladesh"
             className="mt-2 w-full rounded-xl border border-input bg-background px-4 py-3 outline-none ring-ring focus:ring-2"
           />
         </label>

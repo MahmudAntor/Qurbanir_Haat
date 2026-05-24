@@ -24,6 +24,8 @@ export function FloatingWhatsApp() {
 }
 
 export function Footer() {
+  const { contactEmail, contactLocation, whatsappDisplay } = useSiteSettings();
+
   return (
     <footer className="border-t border-border bg-primary text-primary-foreground">
       <div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 lg:grid-cols-4 lg:px-8">
@@ -39,8 +41,8 @@ export function Footer() {
             <span className="font-display text-lg">Qurbanir Haat</span>
           </div>
           <p className="mt-4 max-w-md text-sm text-primary-foreground/75">
-            Premium Qurbani cattle, raised with care on our farm in Pabna. Hand-picked,
-            vet-certified and personally delivered across Bangladesh.
+            Premium Qurbani cattle, raised with care on trusted farms. Hand-picked, vet-certified
+            and personally delivered across Bangladesh.
           </p>
         </div>
         <div>
@@ -71,14 +73,14 @@ export function Footer() {
         <div>
           <p className="text-xs uppercase tracking-wider text-gold">Contact</p>
           <ul className="mt-4 space-y-2 text-sm text-primary-foreground/80">
-            <li>WhatsApp: +880 1700 000 000</li>
-            <li>hello@qurbanirhaat.online</li>
-            <li>Pabna · Dhaka · Bangladesh</li>
+            <li>WhatsApp: {whatsappDisplay}</li>
+            <li>{contactEmail}</li>
+            {contactLocation && <li>{contactLocation}</li>}
           </ul>
         </div>
       </div>
       <div className="border-t border-primary-foreground/10 px-5 py-5 text-center text-xs text-primary-foreground/60 lg:px-8">
-        © {new Date().getFullYear()} Qurbanir Haat. All rights reserved.
+        {"\u00a9"} {new Date().getFullYear()} Qurbanir Haat. All rights reserved.
       </div>
     </footer>
   );

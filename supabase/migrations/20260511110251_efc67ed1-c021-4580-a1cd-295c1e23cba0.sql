@@ -85,7 +85,9 @@ create policy "admins delete inquiries" on public.inquiries
 -- Site Settings (single row)
 create table public.site_settings (
   id smallint primary key default 1,
-  whatsapp_number text not null default '8801700000000',
+  whatsapp_number text not null default '8801715155505',
+  contact_email text not null default 'info.qurbanirhaat@gmail.com',
+  contact_location text not null default 'Dhaka, Bangladesh',
   meta_pixel_id text,
   updated_at timestamptz not null default now(),
   constraint single_row check (id = 1)

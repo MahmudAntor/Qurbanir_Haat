@@ -100,18 +100,24 @@ export type Database = {
       };
       site_settings: {
         Row: {
+          contact_email: string;
+          contact_location: string;
           id: number;
           meta_pixel_id: string | null;
           updated_at: string;
           whatsapp_number: string;
         };
         Insert: {
+          contact_email?: string;
+          contact_location?: string;
           id?: number;
           meta_pixel_id?: string | null;
           updated_at?: string;
           whatsapp_number?: string;
         };
         Update: {
+          contact_email?: string;
+          contact_location?: string;
           id?: number;
           meta_pixel_id?: string | null;
           updated_at?: string;
